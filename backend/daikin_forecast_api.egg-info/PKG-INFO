@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: daikin-forecast-api
+Version: 1.0.0
+Requires-Dist: flask
+Requires-Dist: flask-cors
+Requires-Dist: flask-jwt-extended
+Requires-Dist: python-dotenv
+Requires-Dist: pandas
+Requires-Dist: numpy
+Requires-Dist: openpyxl
+Requires-Dist: werkzeug
+Dynamic: requires-dist

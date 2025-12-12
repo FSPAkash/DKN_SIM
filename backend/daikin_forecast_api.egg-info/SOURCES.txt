@@ -1,0 +1,9 @@
+setup.py
+daikin_forecast_api.egg-info/PKG-INFO
+daikin_forecast_api.egg-info/SOURCES.txt
+daikin_forecast_api.egg-info/dependency_links.txt
+daikin_forecast_api.egg-info/requires.txt
+daikin_forecast_api.egg-info/top_level.txt
+tests/test_auth.py
+tests/test_market_share.py
+tests/test_simulation.py
