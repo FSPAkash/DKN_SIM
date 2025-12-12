@@ -1,14 +1,25 @@
+providers = []
+
 [phases.setup]
 nixPkgs = ["python311", "nodejs-18_x"]
+cmds = [
+    "python3 -m ensurepip --upgrade",
+    "python3 -m pip install --upgrade pip"
+]
 
 [phases.install]
+dependsOn = ["setup"]
 cmds = [
-    "cd backend && pip install -r requirements.txt",
+    "cd backend && python3 -m pip install -r requirements.txt",
     "cd frontend && npm install"
 ]
 
 [phases.build]
+dependsOn = ["install"]
 cmds = ["cd frontend && npm run build"]
 
 [start]
-cmd = "cd backend && gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 2"
+cmd = "cd backend && python3 -m gunicorn wsgi:app --bind 0.0.0.0:$PORT --workers 2"
+
+[variables]
+NIXPACKS_PYTHON_VERSION = "3.11"
