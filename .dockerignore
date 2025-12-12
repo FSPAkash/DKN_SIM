@@ -1,0 +1,45 @@
+# Git
+.git
+.gitignore
+
+# Node
+**/node_modules
+frontend/node_modules
+**/.npm
+
+# Python
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/.venv
+**/venv
+backend/venv
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Build outputs (we rebuild in Docker)
+frontend/dist
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test
+**/coverage
+**/.pytest_cache
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Railway/Render configs
+render.yaml
