@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from .config import Config
@@ -7,7 +7,10 @@ import os
 jwt = JWTManager()
 
 def create_app(config_class=Config):
-    app = Flask(__name__)
+    # Get the path to frontend dist folder
+    frontend_folder = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'frontend', 'dist')
+    
+    app = Flask(__name__, static_folder=frontend_folder, static_url_path='')
     app.config.from_object(config_class)
     
     # Initialize extensions
@@ -38,13 +41,26 @@ def create_app(config_class=Config):
             'environment': os.environ.get('RAILWAY_ENVIRONMENT', 'development')
         }), 200
     
-    # Root endpoint
-    @app.route('/')
-    def root():
+    # API root endpoint
+    @app.route('/api')
+    def api_root():
         return jsonify({
             'name': 'Daikin Forecast Simulator API',
             'version': '1.0.0',
             'health': '/api/health'
         }), 200
+    
+    # Serve frontend for all non-API routes
+    @app.route('/')
+    def serve_frontend():
+        return send_from_directory(app.static_folder, 'index.html')
+    
+    @app.route('/<path:path>')
+    def serve_frontend_files(path):
+        # If the path is for a file that exists, serve it
+        if os.path.exists(os.path.join(app.static_folder, path)):
+            return send_from_directory(app.static_folder, path)
+        # Otherwise serve index.html for client-side routing
+        return send_from_directory(app.static_folder, 'index.html')
     
     return app
